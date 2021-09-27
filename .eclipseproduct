@@ -65,12 +65,13 @@ limit 10;
 SELECT m.Match_Id, m.Team_1, t.Team_Name
 from "Match" m, Team t 
 where m.Team_1 = t.Team_Id 
+group by t.Team_Name 
 union
 select m.Match_Id, m.Team_2, t.Team_Name
 from "Match" m, Team t
 where m.Team_2 = t.Team_Id
-group by t.Team_Name
-;
+group by t.Team_Name;
+
 
 
 --which team won by run type
