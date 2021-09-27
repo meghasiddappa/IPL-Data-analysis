@@ -52,7 +52,6 @@ from "Match" m
 WHERE m.Toss_Winner = m.Match_Winner
 group by m.Match_Winner ;
 
-
 --top 10 venue where most matches played
  select COUNT(m.Match_Id), m.Venue_Id, v.Venue_Name 
  from "Match" m,Venue v 
@@ -61,17 +60,21 @@ group by m.Match_Winner ;
 order by COUNT(m.Match_Id) DESC
 limit 10;
 
+
+
 --nnumber of matches played by each Team
-SELECT m.Match_Id, m.Team_1, t.Team_Name
+select team, SUM(match_count),team_name
+from(
+SELECT COUNT( m.Match_Id) match_count, m.Team_1 team, t.Team_Name team_name
 from "Match" m, Team t 
 where m.Team_1 = t.Team_Id 
+group by t.Team_Name 
 union
-select m.Match_Id, m.Team_2, t.Team_Name
+select COUNT( m.Match_Id), m.Team_2, t.Team_Name
 from "Match" m, Team t
 where m.Team_2 = t.Team_Id
-group by t.Team_Name
-;
-
+group by t.Team_Name)
+group by team;
 
 --which team won by run type
 select COUNT( m.Match_Id),m.Match_Winner 
@@ -81,17 +84,16 @@ group by m.Match_Winner
 order by COUNT( m.Match_Id) desc;
 
 --top 5 man of the match player from winning team
-select m.Man_of_the_Match,p.Player_Name 
-from "Match" m, Player p
-inner join "Match" m2 on m.Man_of_the_Match =p.Player_Id 
-where m.Match_Winner = 
+select COUNT( m.Man_of_the_Match), p.Player_Name 
+from "Match" m
+inner join Player p on p.Player_Id = m.Man_of_the_Match  
+inner join Team t on t.Team_Id = m.Match_Winner 
+group by p.Player_Name 
+order by COUNT( m.Man_of_the_Match) DESC 
+limit 5;
 
 
 
-SELECT * from "Match" m ;
+select DISTINCT m.Man_of_the_Match from "Match" m ;
 
-
-
-
-
-
+select DISTINCT * from Player p 
