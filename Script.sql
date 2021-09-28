@@ -34,7 +34,8 @@ group by t.Team_Name ;
 --number of match played in each season with year
 select DISTINCT COUNT( m.Match_Id) as count, m.Season_Id  
 from "Match" m 
-group by m.Season_Id ;
+group by m.Season_Id 
+order by count desc;
 
 --number of match played in each city
 select v.City_Id, c.City_Name, count(m.Venue_Id)
@@ -91,12 +92,16 @@ order by COUNT( m.Man_of_the_Match) DESC
 limit 5;
 
 --batsman name with there score
-select p.Player_Name, bs.Runs_Scored 
+select p.Player_Name, SUM(bs.Runs_Scored) 
 from Ball_by_Ball bbb 
 inner join Player p on p.Player_Id = bbb.Striker
-inner join Batsman_Scored bs on bs.Match_Id = bbb.Match_Id;
---group by p.Player_Name ;
+inner join Batsman_Scored bs on bs.Match_Id = bbb.Match_Id
+group by p.Player_Name ;
 
+-- team won by all seasons
+select m.Season_Id, m.Match_Winner,COUNT( m.Match_Id) 
+from "Match" m
+group by m.Season_Id ;
 
 select * from "Match" m ;
 
