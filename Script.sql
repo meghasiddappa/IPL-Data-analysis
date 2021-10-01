@@ -105,4 +105,4 @@ group by m.Season_Id ;
 
 select * from "Match" m ;
 
-select DISTINCT * from Player p 
+select DISTINCT * from Player p;
