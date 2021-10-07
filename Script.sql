@@ -99,10 +99,8 @@ inner join Batsman_Scored bs on bs.Match_Id = bbb.Match_Id
 group by p.Player_Name ;
 
 -- team won by all seasons
-select m.Season_Id, m.Match_Winner,COUNT( m.Match_Id) 
+select MAX( Match_Date),Season_Id, Match_Winner
 from "Match" m
-group by m.Season_Id ;
+group by Season_Id ; 
 
-select * from "Match" m ;
 
-select DISTINCT * from Player p;
