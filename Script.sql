@@ -101,6 +101,6 @@ group by p.Player_Name ;
 -- team won by all seasons
 select MAX( Match_Date),Season_Id, Match_Winner
 from "Match" m
-group by Season_Id ; 
+group by Season_Id;
 
 
